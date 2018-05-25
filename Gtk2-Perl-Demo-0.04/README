@@ -1,0 +1,286 @@
+
+INSTALL
+===========
+No need to install the application. Just unzip it and run gtk-perl-demo.pl
+
+
+prerequisites:
+Glib
+Gtk2
+
+
+
+for ViewSource to work:
+Gnome2  which is currently NOT available on MS Windows.
+to install Gnome run 
+
+need libgnomeprintui-devel
+
+cpan install Bundle::Gnome2
+
+
+TODO
+============
+
+- Search results should also show the title of the file 
+
+- How can I catch the ESC key pressed ?
+- How can I display simple HTML files or pod ?
+  Gtk2::PodViewer
+  Gtk2::Html2, Gtk2::MozEmbed
+- How could we include the both the documentation and the Tutorial in the Demo tool?
+- How to add an icoon for the Alt-TAB thingy and the image when minimized ?
+  Gtk2::Window->set_icon()?
+
+- Syntax highlighting  (using Gtk2::SourceView ?) make it optional
+
+- Bookmarks
+- History of visited pages
+
+- The scrolled windows should both be set to automatic on both directions; set a default size for the toplevel window to
+  account for that; and use an HPaned instead of an HBox to contain the tree and text -- that gives the user more control
+  over the size and position.
+
+- setup vendor branch so I can easily track changes in the real versions
+  of some of the examples as they appear in the GTK2 CVS.
+- make examples pass use strict and use warnings;
+- add more entries to the tutorial
+- missing widgets:
+  TreeSelection
+- organize Examples and Cookbook
+
+- Disable both execute button and save button for non-executable entries
+
+- When saving a file with the name of an already existing file ask if user wants to rewrite ?
+
+- Mark clearly on the item list which one is text and which one is code
+
+- Have a list of all the signals and jump to files based on signal names ?
+
+- Have an index of all the words in the comments and pod sections of the files ?
+  Probably not needed now that we have full text search
+
+- See also and somehow integrate with 
+  http://live.gnome.org/GTK2_2dPerl_2fRecipes
+
+- The color snooper doesn't work --- it complains on the console that it needs an argument.
+  change the script to have a default file or we will have to rework the whole examples invocation thing.
+
+
+- It wasn't immediately obvious that i could edit the text to modify and run the samples.  
+  Some explanatory text and a "revert" button would be helpful.
+
+- When moving form a buffer that was changed to show another file it silently discards all the
+  changes made. It is not designated to be an editor or an IDE but still it might be annoying.
+
+- Instead of the "List Widgets" button that turns into a "List Examples" button, you could place both trees into a
+  notebook.
+
+- Can we somehow include the Tutorial and maybe the full documentation?
+
+List of files in the Gtk2 documentation.
++ marks classes that are used in some of the examples
+indented entries have examples but have no entries in the documentation
+
+GtkAboutDialog
+     Gtk2::AccelGroup      +
+GtkAccelLabel
+GtkAccessible
+GtkActionGroup
+GtkAction
+GtkAdjustment
+GtkAlignment              +
+GtkArrow                  +
+GtkAspectFrame
+GtkBin
+GtkBox                    +
+GtkButtonBox
+GtkButton                 +
+GtkCalendar               +
+GtkCellEditable           +
+GtkCellLayout
+GtkCellRendererCombo
+GtkCellRenderer           +
+GtkCellRendererPixbuf     +
+GtkCellRendererProgress
+GtkCellRendererText       +
+GtkCellRendererToggle
+GtkCellView
+GtkCheckButton            +
+GtkCheckMenuItem
+GtkCList
+GtkColorButton            +
+GtkColorSelectionDialog
+GtkColorSelection
+GtkComboBoxEntry          +
+GtkComboBox               +
+GtkCombo
+GtkContainer
+GtkCTree
+GtkCurve
+GtkDialog                 +
+GtkDrawingArea            +
+GtkEditable
+GtkEntryCompletion
+GtkEntry                  +
+GtkEventBox               +
+GtkExpander               +
+GtkFileChooserButton
+GtkFileChooserDialog      +
+GtkFileChooser            +
+GtkFileChooserWidget
+GtkFileSelection          +
+GtkFixed
+GtkFontButton
+GtkFontSelectionDialog    +
+GtkFontSelection          +
+GtkFrame                  +
+GtkGammaCurve
+GtkHandleBox
+GtkHBox                   +
+GtkHButtonBox             +
+GtkHPaned
+GtkHRuler                 +
+GtkHScale
+GtkHScrollbar
+GtkHSeparator             +
+   Gtk2::IconSet          +
+   Gtk2::IconFactory      +
+GtkIconTheme
+GtkIconView
+GtkImage                  +
+GtkImageMenuItem
+   Gtk2::ItemFactory      +
+GtkIMContext
+GtkIMContextSimple
+GtkIMMulticontext
+GtkInputDialog
+GtkInvisible
+GtkItemFactory
+GtkItem
+GtkLabel
+GtkLayout
+GtkList
+GtkListItem
+GtkListStore             +
+   Gtk2::Label           +
+   Gtk2::Layout          +
+GtkMenuBar               +
+GtkMenu                  +
+GtkMenuItem              +
+GtkMenuShell
+GtkMenuToolButton
+GtkMessageDialog
+GtkMisc
+GtkNotebook
+GtkObject
+GtkOldEditable
+GtkOptionMenu            +
+   Gtk2::Pango           +
+GtkPaned
+GtkPixmap
+GtkPlug                  +
+GtkPreview
+GtkProgressBar           +
+GtkProgress
+GtkRadioAction
+GtkRadioButton           +
+GtkRadioMenuItem
+GtkRadioToolButton
+GtkRange
+GtkRuler
+GtkScale
+GtkScrollbar
+GtkScrolledWindow        +
+GtkSeparator
+GtkSeparatorMenuItem
+GtkSeparatorToolItem
+GtkSettings
+GtkSizeGroup
+   Gtk2::SimpleMenu      +
+   Gtk2::SimpleList      +
+GtkSocket                +
+GtkSpinButton            +
+GtkStatusbar
+GtkStyle
+   Gtk2::Stock           +
+GtkTable                 +
+GtkTearoffMenuItem
+GtkTextBuffer            +
+GtkText
+GtkTextMark
+GtkTextTag
+GtkTextTagTable
+GtkTextView              +
+   Gtk2::Timeout         +
+GtkTipsQuery
+GtkToggleAction
+GtkToggleButton          +
+GtkToggleToolButton
+GtkToolbar
+GtkToolButton
+GtkToolItem
+GtkTooltips              +
+GtkTree
+GtkTreeItem
+GtkTreeModelFilter
+GtkTreeModel             +
+GtkTreeModelSort
+   Gtk2::TreePath        +
+   Gtk2::TreeIter        +
+GtkTreeSelection
+GtkTreeSortable
+GtkTreeStore
+GtkTreeViewColumn        +
+GtkTreeView              +
+GtkUIManager
+GtkVBox                  +
+GtkVButtonBox            +
+GtkViewport
+GtkVPaned                +
+GtkVRuler                +
+GtkVScale
+GtkVScrollbar
+GtkVSeparator            +
+GtkWidget
+GtkWindowGroup
+GtkWindow                +
+
+
+DONE
+=====================================
+
+All the examples from the distrubtion are included
+
+Multi level tree (so the various sections can be in expandable subtree)
+
+Add execute button
+
+Provide an index tables where we list all the Widgets we used in the examples
+and where were they used. We might be able to list all the signal handlers
+and where were they used.
+
+Code for execution should be taken from the window and we should encourage people to
+experiment with the various options. 
+
+Add save button to save the content of the code window (now that we do not have them in separate files)
+
+- free text search in all the files
+
+- cleanup README file
+- Search should be invoked on ENTER when in search box
+- Ctr-S should jump in the search text box
+- Maybe search result window should be part of the main window and not a separate one.
+- Search and highlight in the current window
+- If you set the shadow type on the two scrolled windows to "in", the window will look a little better.
+  Let's see this
+- gtk-demo allows you to run scripts by activating their rows in the treeview (double-clicking or pressing enter). 
+
+- gtk-demo allows you to run more than one demo at a time.  Both of those features would be handy.  
+  (Since you can edit the script,
+  it would be rather easy for a user to hose the demo.)
+- We might want to run the external application on a fork so the user can run several 
+  versions at the same time and see the differences.
+- Repeat search within the buffer pressing Ctr-N
+- Mnemonics and stock icons would spruce up the main window a bit.
+

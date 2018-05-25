@@ -1,0 +1,30 @@
+2008/06/12 13:10:54 ERROR - main:: - Test me error
+2008/06/12 13:10:54 FATAL - main:: - Test me fatal
+2008/06/12 13:12:19 ERROR - main:: - Test me error
+2008/06/12 13:12:19 FATAL - main:: - Test me fatal
+2008/06/12 13:42:32 ERROR - main:: - Test me error
+2008/06/12 13:42:32 FATAL - main:: - Test me fatal
+2008/06/12 16:58:43 ERROR - main:: - Test me error
+2008/06/12 16:58:43 FATAL - main:: - Test me fatal
+2008/06/12 16:58:43 DEBUG - main:: - Is this causing crappy lines? : 
+2008/06/12 16:59:14 ERROR - main:: - Test me error
+2008/06/12 16:59:14 FATAL - main:: - Test me fatal
+2008/06/12 16:59:14 DEBUG - main:: - Is this causing crappy lines? : 
+2008/06/12 17:07:02 ERROR - main:: - Test me error
+2008/06/12 17:07:02 FATAL - main:: - Test me fatal
+2008/06/12 17:07:02 DEBUG - main:: - Is this causing crappy lines? : 
+2008/06/12 17:21:40 ERROR - main:: - Test me error
+2008/06/12 17:21:40 FATAL - main:: - Test me fatal
+2008/06/12 17:21:40 DEBUG - main:: - Is this causing crappy lines? : 
+2008/06/12 17:21:53 ERROR - main:: - Test me error
+2008/06/12 17:21:53 FATAL - main:: - Test me fatal
+2008/06/12 17:21:53 DEBUG - main:: - Is this causing crappy lines? : 
+2008/06/13 14:14:53 ERROR - main:: - Test me error
+2008/06/13 14:14:53 FATAL - main:: - Test me fatal
+2008/06/13 14:14:53 DEBUG - main:: - Is this causing crappy lines? : 
+2008/06/13 14:15:08 ERROR - main:: - Test me error
+2008/06/13 14:15:08 FATAL - main:: - Test me fatal
+2008/06/13 14:15:08 DEBUG - main:: - Is this causing crappy lines? :  
+2008/06/13 14:15:15 ERROR - main:: - Test me error
+2008/06/13 14:15:15 FATAL - main:: - Test me fatal
+2008/06/13 14:15:15 DEBUG - main:: - Is this causing crappy lines? : 

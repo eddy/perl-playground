@@ -1,0 +1,9 @@
+This is to find all WA jobs received overnight because WA jobs are all lodged
+late in STARS.
+
+To use it:
+ $ wa_overnight_job_list.pl | sort_wa_job.pl | unix2dos
+
+Then send the file to Tony Bollen.
+
+

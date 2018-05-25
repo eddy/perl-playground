@@ -1,0 +1,371 @@
+#!/usr/bin/perl -w
+#
+# Get sum of user's times
+#
+# $Id: utime,v 1.20 2003/09/26 08:08:15 eddy Exp $
+#
+# $Log: utime,v $
+# Revision 1.20  2003/09/26 08:08:15  eddy
+# clean up
+#
+# Revision 1.19  2003/09/26 07:25:14  eddy
+# Clean up script
+# Allow --phone and --ip at the same time
+#
+# Revision 1.18  2003/09/26 04:06:50  eddy
+# Fix bugs and put options into hash
+#
+# Revision 1.17  2003/09/25 07:41:17  eddy
+# --ip displays IP address for each session, not only the last connection
+#
+# Revision 1.16  2003/09/25 02:46:25  eddy
+# Add --ip option to display IP address
+#
+# Revision 1.15  2003/09/25 00:37:18  eddy
+# Initial checkin to CVS
+#
+# Revision 1.14  2001/05/08 00:06:09  chris
+# Ignore roaming plan ('r') in usage table
+#
+# Revision 1.13  2001/03/05 05:47:11  chris
+# Deal with session time of zero
+#
+# Revision 1.12  2000/09/11 01:34:58  chris
+# Don't panic about zero bytes (ie. don't try dividing by zero)
+#
+# Revision 1.11  2000/07/18 00:01:19  chris
+# Avoid illegal division by zero in mbph calc
+#
+# Revision 1.10  2000/06/20 00:10:50  chris
+# Add --totmb, --phone
+# Code cleanups
+#
+# Revision 1.9  1999/12/14 22:40:16  shead
+# as5 added.
+#
+# Revision 1.8  1999/12/01 05:26:05  chris
+# Add support for usage.mbytes field
+# Add --phone option
+#
+# Revision 1.7  1999/07/27 02:04:15  chris
+# Alter report to show Mb per session with time and Mb totals
+# at the bottom.  The old format (without Mb display) is
+# available with the --runtime option
+#
+# Revision 1.6  1999/07/27 00:36:16  chris
+# Report individual session times as days+hh:mm:ss rather than just hh:mm:ss
+#
+# Revision 1.5  1999/07/27 00:03:53  chris
+# Default to --ago=0 i.e. current period
+#
+# Revision 1.4  1999/06/27 08:00:31  chris
+# Use Sop::Utime
+#
+# Revision 1.3  1999/04/18 18:37:30  chris
+# Add --begin and --end
+#
+# Revision 1.2  1999/04/17 20:16:52  chris
+# Add --ago
+#
+# Revision 1.1  1999/04/17 20:15:57  chris
+# Initial revision
+#
+
+sub usage
+{
+  print STDERR <<EOT;
+Usage: 
+utime [--month=yymm|--ago=n|--start=datetime --stop=datetime] [--runtime|--phone] [--ip] login
+
+  Options:  
+    --totmb     Display a running total for Mb instead of per session Mb
+    --phone     Display caller id (if available)   
+    --ip        Display user's session IP address
+
+EOT
+  exit 1;
+}
+
+use Getopt::Long;
+use Sop::DateTime;
+use Sop::Utime;
+use Sop::DB;
+use strict;
+
+my $err = 0;
+my $login;
+
+my %opts = (
+	totmb_flgi => undef,
+	pago => undef,
+	stop => undef,
+	start => undef,
+	yymm => undef,
+	showIP => 0,
+	showphone => 0,
+	showrun => 0,
+);
+
+GetOptions(
+  'month:s'	=> \$opts{yymm},
+  'runtime'	=> \$opts{showrun},
+  'ip'      => \$opts{showIP},
+  'phone'	=> \$opts{showphone},
+  'start:s'	=> \$opts{start},
+  'stop:s'	=> \$opts{stop},
+  'totmb'	=> \$opts{totmb_flg},
+  'ago:i'	=> \$opts{pago},
+) || ++$err;
+
+my ($start, $stop);
+
+++$err unless defined $opts{start} == defined $opts{stop};
+++$err if defined $opts{start} && (defined $opts{yymm} || defined $opts{pago});
+++$err if defined $opts{yymm} && defined $opts{pago};
+++$err if $opts{showrun} && $opts{showphone};
+++$err if $opts{showIP} && $opts{showrun};
+
+if (defined $opts{yymm}) {
+  ++$err if defined $opts{pago};
+  my($yy, $mm) = $opts{yymm} =~ /^(\d\d)(\d\d)$/;
+  if (defined $mm && $mm > 0 && $mm < 13) {
+    $yy += 2000 if $yy < 32;
+    $start = sprintf '1/%d/%d', $mm, $yy;
+    my $endmm= $mm + 1;
+    if ($endmm > 12) {
+      ++$yy;
+      $endmm = 1;
+    }
+    $stop = sprintf '1/%d/%d', $endmm, $yy;
+  }
+  else {
+    ++$err;
+  }
+}
+$opts{pago} = 0 unless (defined $opts{pago} || (defined $start && defined $stop));
+
+if (@ARGV) {
+  $login = shift;
+}
+else { ++$err; }
+
+++$err if @ARGV;
+
+usage if $err;
+
+my $log8 = substr($login, 0, 8);
+
+$= = 999999;
+
+my @DNAME = qw(Sun Mon Tue Wed Thu Fri Sat);
+my @MNAME = qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec);
+
+DB::connect('');
+
+my($starte, $stope);
+
+if (defined $login && defined $opts{pago}) {
+  ($starte, $stope) = get_period($login, $opts{pago});
+  die "Error: there aren't $opts{pago} plans in ustart for $login\n"
+    unless defined $starte;
+  $stope = time unless defined $stope;
+}
+else {
+  $starte = datetime($start);
+  $stope = datetime($stop);
+}
+
+$start = datefmt($starte);
+$stop = datefmt($stope);
+my $total = my $tot_bytes = my $tot_mbytes = 0;
+my $mb;
+my $mbph;
+
+printf "Period: %s - %s\n", $start, $stop;
+printf "\n%-12s %-8s %-13s %-19s %-8s", 
+       'User', 'Tty', 'Date', 'Session', 'Time';
+
+if ($opts{showphone} && $opts{showIP}) {
+	printf "%10s %10s\n\n", 'Phone', 'IP';
+} elsif ($opts{showrun}) {
+	printf("%10s\n\n", 'Total');
+} elsif ($opts{showIP}) {
+	printf("%13s\n\n", 'IP');
+} elsif ($opts{showphone}) {
+	printf "%11s\n\n", 'Phone';
+} else {
+	printf ("%6s\n\n", 'Mb');
+}
+
+my $s = Sop::Utime->new($starte, $stope);
+$s->splitsess(1);
+$s->badstopok(1);
+$s->logins($login);
+$s->fields('calling_station_id', 'framed_ip_address');
+
+my($line, $secs, $bytes, @addinfo);
+my $to;
+my $elapsed;
+my $telapsed;
+my $date;
+my $from;
+	
+while (($login, $line, $start, $stop, $secs, $bytes, @addinfo) = $s->next()) {
+  $total += $secs;
+  if (defined $bytes && $bytes) {
+    if (($tot_bytes += $bytes) >= (1024*1024)) {
+      $tot_mbytes += int($tot_bytes / (1024*1024));
+      $tot_bytes %= (1024*1024);
+    }
+    if ($opts{totmb_flg}) {
+      $mb = sprintf('%3.1f', $tot_mbytes + $tot_bytes / (1024*1024));
+#     $mb = sprintf('%3.1f', $tot_mbytes * (1024*1024) + $tot_bytes);
+    }
+    else {
+      $mb = sprintf('%3.1f', $bytes / (1024*1024));
+    }
+    if ($secs) {
+      $mbph = sprintf('%4.2f', ($bytes * (60*60)) / ($secs * (1024*1024)));
+    }
+    else {
+      $mbph = '?';
+    }
+  }
+  else {
+    $mb = '?';
+    $mbph = '?';
+  }
+
+  my ($sec,$min,$hour,$mday,$mon,$year,$wday) = localtime($start);
+  $date = sprintf '%s %s %2d', $DNAME[$wday], $MNAME[$mon], $mday;
+  $from = sprintf '%02d:%02d:%02d', $hour, $min, $sec;
+
+  ($sec,$min,$hour) = localtime($stop);
+  $to = sprintf '%02d:%02d:%02d', $hour, $min, $sec;
+
+  $elapsed = '(' . dhms($secs) . ')';
+  $telapsed = hms($total);
+  
+  printf "%-10s %-8s %-11s %-8s - %-8s %12s %3s", 
+         $log8, $line, $date, $from, $to, $elapsed, " "x3;
+
+  if ($opts{showIP} && $opts{showphone}) {
+	  printf "%-10s %-16s\n", $addinfo[0], $addinfo[1];
+  } elsif ($opts{showrun}) {
+	  printf("%-13s\n", $telapsed);
+  } elsif ($opts{showIP}) {
+      printf("%-13s\n", $addinfo[1]);
+  } elsif ($opts{showphone}) {
+      printf("%-13s\n", $addinfo[0]);
+  } else {
+	  printf ("%-13s\n", $mb);
+  }
+}
+
+unless ($opts{showrun} || $opts{showphone} || $opts{showIP}) {
+  $elapsed = '(' . hms($total) . ')';
+  $mb = sprintf('%3.1f', $tot_mbytes + $tot_bytes / (1024*1024));
+  if ($total) {
+    $mbph = sprintf('%4.2f', ($tot_mbytes + ($tot_bytes / (1024*1024))) * (60*60) / $total);
+  }
+  else {
+    $mbph = sprintf('%4.2f', 0);
+  }
+  
+  $~ = 'TRAILER';
+  write;
+}
+exit 0;
+
+
+######################################################################
+format TRAILER =
+                                                   --------------------
+                                           Totals: @>>>>>>>>>>>> @>>>>>
+                                                       $elapsed, $mb
+.
+
+######################################################################
+
+sub fatal
+{
+  my($package, $filename, $line) = caller;
+  die 'FATAL ERROR: ', join(' ', @_),
+      "\nStopped at ($filename, $line)\n";
+}
+
+
+######################################################################
+# Get plan start and finish
+#
+sub get_period
+{
+  my($login, $ago) = @_;
+  my($start, $finish);
+
+  my $sql = <<EOT;
+select
+  date_part('epoch', start),
+  date_part('epoch', finish)
+from usage
+where login = '$login'
+  and plan != 'r'
+order by start desc
+EOT
+
+  my $res = DB::dosql($sql);
+  while (($start, $finish) = $res->fetchrow) {
+    if (--$ago < 0) {
+      return ($start, $finish);
+    }
+  }
+  return ();
+}
+sub datefmt
+{
+  my($s, $min, $h, $d, $mon, $y) = localtime($_[0]);
+  $y -= 100 if $y >= 100;
+  ++$mon;
+  sprintf('%02d/%02d/%02d %02d:%02d:%02d', $d, $mon, $y, $h, $min, $s);
+}
+sub dhms
+{
+  my($sec) = @_;
+  my($day, $hr, $min);
+
+  if (defined $sec && $sec) {
+    $day = int($sec / (24*60*60));
+    $sec -= $day * 24*60*60;
+    $hr = int($sec / (60*60));
+    $sec -= $hr * 60*60;
+    $min = int($sec / (60));
+    $sec -= $min * 60;
+  }
+  else {
+    $day = $hr = $min = $sec = 0;
+  }
+
+  my $s = sprintf('%02d:%02d:%02d', $hr, $min, $sec);
+  if ($day) {
+    $s = "$day+" . $s;
+  }
+  return $s;
+}
+sub hms
+{
+  my($sec) = @_;
+  my($hr, $min);
+
+  if (defined $sec && $sec) {
+    $hr = int($sec / (60*60));
+    $sec -= $hr * 60*60;
+    $min = int($sec / (60));
+    $sec -= $min * 60;
+  }
+  else {
+    $hr = $min = $sec = 0;
+  }
+
+  sprintf('%02d:%02d:%02d', $hr, $min, $sec);
+}
+

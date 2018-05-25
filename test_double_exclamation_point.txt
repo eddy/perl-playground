@@ -1,0 +1,27 @@
+It is just two ! boolean not operators sitting next to each other.
+
+The reason to use this idiom is to make sure that you receive a
+1 or a 0 (in numeric context) or empty string (in string
+context).
+
+Actually it returns an empty string which numifys to 0. It's
+usually *only_used* in numeric, or boolean context though.
+
+You will often see this in Code Golf competitions, because it is
+shorter than using the ternary ? : operator with 1 and 0 like:
+
+	($test ? 1 : 0)
+
+!! undef  == 0
+!! 0      == 0
+!! 1      == 1
+!! $obj   == 1
+!! 100    == 1
+
+undef ? 1 : 0  == 0
+0     ? 1 : 0  == 0
+1     ? 1 : 0  == 1
+$obj  ? 1 : 0  == 1
+100   ? 1 : 0  == 1
+
+

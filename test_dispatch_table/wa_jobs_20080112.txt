@@ -1,0 +1,46 @@
+Job: 46821 - P20.34 
+Image received time (WA time): 11/01/2008 19:44:13
+File: PCLK.W1.P#BLP2B2.J18253.CJ.FSTD.D0000110 : Fri Jan 11 21:44:09 2008 (EST) (MSR)
+File: PCLK.W1.P#BLP2B2.J18253.CO.FGDUP.D0000108 : Fri Jan 11 21:44:10 2008 (EST) (LCDS)
+File: PCLK.W1.PQBLP2B2.J18258.CO.FSTD4.D0000104 : Fri Jan 11 21:44:13 2008 (EST) (QCS)
+----------------------------------------------------------------------
+
+Job: H47911 - B20.50 
+Image received time (WA time): 11/01/2008 20:18:07
+File: PCLK.W1.B#PYND03.J34290.CO.FSTD2.D0000108 : Fri Jan 11 22:18:05 2008 (EST) (LCDS)
+File: PCLK.W1.BQPYND03.J34293.CO.FSTD4.D0000104 : Fri Jan 11 22:18:07 2008 (EST) (QCS)
+----------------------------------------------------------------------
+
+Job: 46827 - P20.45 
+Image received time (WA time): 11/01/2008 20:02:09
+File: PCLK.W1.P#BL02C1.J18316.CJ.FSTD.D0000115 : Fri Jan 11 22:02:08 2008 (EST) (MSR)
+File: PCLK.W1.P#BL02C1.J18316.CO.FSTD.D0000111 : Fri Jan 11 22:02:08 2008 (EST) (META)
+File: PCLK.W1.PQBL02C1.J18343.CO.FSTD4.D0000104 : Fri Jan 11 22:02:09 2008 (EST) (QCS)
+----------------------------------------------------------------------
+
+Job: 46825 - P20.42 
+Image received time (WA time): 11/01/2008 19:52:09
+File: PCLK.W1.P#BLP2C2.J18271.CO.FSTD.D0000112 : Fri Jan 11 21:46:11 2008 (EST) (META)
+File: PCLK.W1.PQBLP2C2.J18276.CO.FSTD4.D0000104 : Fri Jan 11 21:46:12 2008 (EST) (QCS)
+File: PCLK.W1.P#BLP2C2.J18271.CJ.FSTD.D0000116 : Fri Jan 11 21:52:09 2008 (EST) (MSR)
+----------------------------------------------------------------------
+
+Job: 46818 - P20.31 
+Image received time (WA time): 11/01/2008 19:52:05
+File: PCLK.W1.P#BLP2A5.J18226.CJ.FSTD.D0000116 : Fri Jan 11 21:44:05 2008 (EST) (MSR)
+File: PCLK.W1.PQBLP2A5.J18246.CO.FSTD4.D0000104 : Fri Jan 11 21:44:05 2008 (EST) (QCS)
+File: PCLK.W1.P#BLP2A5.J18226.CO.FSTD.D0000112 : Fri Jan 11 21:52:05 2008 (EST) (META)
+----------------------------------------------------------------------
+
+Job: H47891 - P20.46 
+Image received time (WA time): 11/01/2008 20:08:05
+File: PCLK.W1.P#PYCH39.J18413.CB.FSTD.D0000107 : Fri Jan 11 22:08:04 2008 (EST) (FLAT)
+File: PCLK.W1.PQPYCH39.J18420.CO.FSTD4.D0000104 : Fri Jan 11 22:08:05 2008 (EST) (QCS)
+----------------------------------------------------------------------
+
+Job: H47951 - P20.47 
+Image received time (WA time): 11/01/2008 20:32:17
+File: PCLK.W1.P#TXDA2.J18498.CO.FSTD.D0000112 : Fri Jan 11 22:32:04 2008 (EST) (META)
+File: PCLK.W1.PQTXDA2.J18509.CO.FSTD4.D0000104 : Fri Jan 11 22:32:17 2008 (EST) (QCS)
+----------------------------------------------------------------------
+

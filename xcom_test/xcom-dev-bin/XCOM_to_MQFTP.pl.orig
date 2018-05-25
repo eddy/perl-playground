@@ -1,0 +1,284 @@
+#!/usr/local/bin/perl
+#$Id$
+#$Source$
+#$Revision$
+#$Date$
+
+use strict;
+use warnings;
+
+################################################################################
+# Initialisation
+#
+
+################################################################################
+# Modules
+#
+
+use Getopt::Long;
+use Pod::Usage;
+use Carp;
+
+use Fatal qw( open close );
+
+use IO::File;
+
+################################################################################
+# Configuration
+#
+
+# Static configuration (as required by usage these may become command-line
+# parameters at some stage)
+
+# Concurrent process threshold
+my $MAX_PROCESSES   = 4;
+
+# Processing age threshold (in minutes) - used to detect hung processes
+my $MAX_PROCESS_AGE = 45;
+
+# XCOM output spool (files are picked up from here)
+my $XCOM_SPOOL_DIR  = "C:\\XCOM_TO_MQFTP_SPOOL";
+my $SENDING_DIR     = "${XCOM_SPOOL_DIR}\\sending";
+my $ERROR_DIR       = "${XCOM_SPOOL_DIR}\\error";
+my $ARCHIVE_DIR     = "${XCOM_SPOOL_DIR}\\archive";
+my $LOG_DIR         = "${XCOM_SPOOL_DIR}\\log";
+
+# MQFTP send script
+my $MQFTP_SEND      = "c:\\Xcomnt\\mqftp.pl";
+
+
+# Command-line parameters
+my $opt_help    = 0;
+my $opt_man     = 0;
+
+my %getopt_long_config = (
+    'man'           => \$opt_man,
+    'help|?'        => \$opt_help,
+    );
+
+################################################################################
+# Function definition
+#
+
+sub transfer_files {
+  # Command-line parameters
+  GetOptions( %getopt_long_config ) || pod2usage(-verbose => 0);
+  pod2usage(-verbose => 1) if ($opt_help);
+  pod2usage(-verbose => 2) if ($opt_man);
+
+  # Verify that required directories and scripts exist
+
+  # Set up logging (Fatal will die on failure)
+  open LOG_FH, ">>", "${LOG_DIR}\\xcom_to_mqftp.log";
+
+  # Check the number of processes running at this time
+  # If there are processes running, also check if they have hung
+  my @running_processes = _find_running_processes();
+
+  for my $process ( @running_processes ) {
+    if ( $process->{age} >= $MAX_PROCESS_AGE ) {
+      _maillogdie("Hung process detected");
+    }
+  }
+
+  # Abort if there are too many processes running
+  if ( scalar( @running_processes ) >= $MAX_PROCESSES ) {
+    _logdie("Too many processes running, terminating");
+  }
+
+  # Check for files ready to transfer in the XCOM output spool
+  # Abort if there are no files to send
+  my $filename = _spool_file_for_sending();
+
+  # MQFTP send the file from the sending directory
+  my $return_code = _mqftp_send($filename);
+  
+  # If the MQFTP send was successful move the file into the archive
+  # directory and log success
+  if ( $return_code == 0 ) {
+    # Move file from sending directory to archive
+
+    # Log success
+  }
+  # If the MQFTP send failed, move the file into the error directory
+  # and report incident
+  else {
+    # Move file from sending directory to error
+
+    # Log error and terminate
+    _maillogdie("MQFTP send failed");
+  }
+
+  return;
+}
+
+# Return a list of hashes describing other current running XCOM_to_MQFTP.pl
+# processes
+sub _find_running_processes {
+  croak "Write this function";
+}
+
+# Check xcom spool for ready file, if one is found move it to the
+# sending directory (and return the name of the file).
+# If no ready file is found, croak with "No files to send"
+sub _spool_file_for_sending {
+  croak "Write this function";
+
+  # Rename file to sending directory to avoid collisions
+  # Abort with error if rename fails
+
+  # croak with no "No files to send" if there are no files ready
+}
+
+# Attept to MQFTP send the file
+# The file should be found in the sending directory
+sub _mqftp_send {
+
+  # Return the return code of the script
+}
+
+# Write a log message
+sub _log {
+  croak "Write this function";
+}
+# Write message to log file and croak
+sub _logdie {
+  croak "Write this function";
+}
+
+# Mail and log this message and croak
+sub _maillogdie {
+  croak "Write this function";
+}
+
+################################################################################
+# Main program
+#
+
+transfer_files();
+
+################################################################################
+# POD
+#
+__END__
+=head1 NAME
+ 
+XCOM_to_MQFTP.pl - XCOM to MQFTP file transfer
+ 
+=head1 VERSION
+ 
+$Id$
+ 
+=head1 USAGE
+ 
+Common usage:
+
+ # Scheduled calls to script (once every 1/5/10 minutes) to transfer
+ # files successfully received via XCOM through to the next server via
+ # MQFTP.
+ * * * * * /path/to/XCOM_to_MQFTP.pl
+
+Or the equivalent in the microsoft windows task scheduler.
+
+ 
+=head1 OPTIONS
+ 
+ -h | --help        brief help message
+ -m | --man         full documentation
+
+=head1 DESCRIPTION
+ 
+This script takes file received via XCOM and deposited in the XCOM output
+spool directory (this will be done in the Xcompp.bat script) and transfers
+those files onto the Centrelink Processing server via MQFTP.
+
+The script self-limits itself to a certain number of concurrent processes to
+avoid overloading the server with the expensive MQFTP send calls (which use
+7zip to compress the data being sent).
+
+The script also checks the currently running processes to make sure they
+have not hung.
+
+The MQFTP send process is tested for success.
+
+Any failures are reported via email alerts.
+
+All actions and errors are logged.
+ 
+=head1 DIAGNOSTICS
+ 
+=over 4
+
+=item Too many processes running, terminating
+
+There are already the maximim number of allowable concurrent processes
+running.
+
+The script will terminate without looking for any files.
+
+=item Hung process detected
+
+A (possibly) hung process has been detected (ie a very old transfer
+process).
+
+An error will be logged and an incident email sent.
+
+=item MQFTP send failed
+
+An error has been detected sending a file by MQFTP.
+
+The file will be moved (if possible) into the error directory.
+
+An error will be logged and an incident email sent.
+
+=item No files to send
+
+No files were found to send.
+
+The process will abort.
+
+=item Unexpected Error: <blah blah blah>
+
+An unexpected error was detected.
+
+An error will be logged and an incident email sent.
+
+=back
+
+ 
+=head1 CONFIGURATION AND ENVIRONMENT
+
+The expected location of the XCOM spool directory and the MQFTP send script
+is defined in the configuration section of this script.
+
+=head1 DEPENDENCIES
+
+There are no known dependacies for this application. 
+
+ 
+=head1 INCOMPATIBILITIES
+ 
+There are no known incompatibilities with this application. 
+
+
+=head1 BUGS AND LIMITATIONS
+ 
+There are no known bugs in this application. 
+
+Please report problems to Centrelink Vic IT Support
+(<centrelinkvicit@hpa.com.au>)
+ 
+
+=head1 AUTHOR
+ 
+Bradley Dean <bradley.dean@hpa.com.au>
+
+Eddy Tan <eddy.tan@hpa.com.au>
+
+Centrelink Vic IT Support <centrelinkvicit@hpa.com.au>
+
+
+=head1 LICENCE AND COPYRIGHT
+ 
+Copyright (c) 2006 HPA Australia. All rights reserved.
+

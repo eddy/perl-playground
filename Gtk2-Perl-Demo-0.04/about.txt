@@ -1,0 +1,21 @@
+This Demo was written by Gabor Szabo (szabgab@gmail.com) using the idea 
+of the gtk-demo distributed with the original C code.
+
+It includes a tutorial part and the example files distributed 
+with the Perl binding of GTK+.
+
+The cookbook was collected by Joe Milosch (a.k.a. zentara).
+
+Copyright The respective authors of the examples and Gabor Szabo
+License: GPL.
+
+
+See also the GTK2 Perl binding web site http://gtk2-perl.sourceforge.net/
+and the tutorial on it http://gtk2-perl.sourceforge.net/doc/gtk2-perl-tut/
+
+
+
+The latest version of this demo can always be found on
+http://www.szabgab.com/
+
+

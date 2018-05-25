@@ -1,0 +1,92 @@
+---
+##############################################################################
+# Centrelink Incident Report #####
+##############################################################################
+
+##############################################################################
+# EVENTS 
+#
+# Events are entered as a mapping:
+#  - The keys are dates of the form: DD/MM/YYYY HH/MM/SS
+#  - The values are short scalars indicating an event
+#
+# Events:
+#   Some date   : Incident created
+#   Next date   : World ended, ah well
+
+Events:
+  24/04/2006 10:59:19 : Incident Created
+  26/04/2006 10:59:19 : The cows came home
+
+##############################################################################
+# TITLE 
+#
+# The title is a single scalar value - it should be short and not include
+# any newline characters.
+#
+# Title: Oh woe is us, an incident hath the nation bewildered
+
+Title: The end of the world is nigh
+
+##############################################################################
+# OVERVIEW 
+#
+# The overview is a block scalar (indicated by the | character) and is a
+# verbose description of the incident and the resolution of that incident
+#
+# Overview: |
+#   The sky fell.
+#
+#   And then we fixed it, with blu-tak.
+#
+Overview: |
+  I see trees of green
+  Red roses too
+  I see them bloom
+  For me and you
+
+  And I think to myself
+  What a wonderful world
+
+##############################################################################
+# RESOURCES
+#
+# The resources is a mapping describing who worked on this incident and
+# for how long. An additional comment may also be given if there was some
+# notable reason for the use of a resource
+#
+# Resources:
+#   bd6338:
+#     mins    : 42
+#     hours   : 42
+#     comment : Douglas Adams was right after all
+#
+Resources:
+  bd6338:
+    mins: 45
+    hours: 5
+    comment: testing is fun
+
+##############################################################################
+# JOB PROBLEMS
+#
+# The job problems is a block scalar (indicated by the | character) and is
+# a list of all files relevant to this incident, grouped by jobs if possible.
+#
+# Note that this list should be automatically generated most of the time - 
+# only annotation should be needed.
+#
+Job Problems: |
+  Job Sequence No  : T42.42       Job Name         : TESTABC
+  Job Number       : J45612       Host Total       : 2345
+  QCS required     : Y            Mailman Required : N
+  Description of problem :
+  None
+  
+  Job Sequence No  : ?            Job Name         : TESTXXX
+  Job Number       : J12345       Host Total       : ?
+  QCS required     : Y            Mailman Required : Y
+  Description of problem :
+  None
+
+

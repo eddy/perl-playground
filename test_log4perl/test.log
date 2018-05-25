@@ -1,0 +1,3 @@
+2008/06/12 12:14:39 INFO> dispatch_file.pl:31 main:: - Test me here
+2008/06/12 12:14:52 INFO> dispatch_file.pl:59 Groceries::Food::consume - Eating Sushi
+2008/06/12 12:14:52 INFO> dispatch_file.pl:31 main:: - Test me here

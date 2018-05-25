@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pdf filename="testme.pdf" doctype="FOO">
+        <document>
+        <page span="2">
+            <index number="1">
+            <field number="1">000000766886</field>
+            <field number="2">007017388906</field>
+            <field number="3">9142608991</field>
+            <field number="4">35</field>
+            <field number="5">SA</field>
+            <field number="6">electricity</field>
+            <field number="7">R001</field>
+            <field number="8"></field>
+            <field number="9">LETAUDMXXXXXX028</field>
+            <field number="10"></field>
+            <field number="11">CAPNAINSTPLCAN</field>
+            <field number="12">28/06/2016</field>
+            <field number="13"></field>
+            <field number="14">Café Chennai</field>
+            <field number="15">04/07/2016</field>
+            <field number="16">12:05:44</field>
+            <field number="17">A072</field>
+            </index>
+        </page>
+        </document>
+</pdf>

@@ -1,0 +1,40 @@
+----------------------------------------------------------------------
+Job: 46719 - P15.42 
+Image received time (WA time): 04/01/2008 19:50:11
+File: PCLK.W1.P#BLP2C2.J55056.CJ.FSTD.D0000116 : Fri Jan  4 21:50:09 2008 (EST) (MSR)
+File: PCLK.W1.P#BLP2C2.J55056.CO.FSTD.D0000112 : Fri Jan  4 21:50:10 2008 (EST) (META)
+File: PCLK.W1.PQBLP2C2.J55061.CO.FSTD4.D0000104 : Fri Jan  4 21:50:11 2008 (EST) (QCS)
+----------------------------------------------------------------------
+
+Job: H40621 - B15.50 
+Image received time (WA time): 04/01/2008 20:18:07
+File: PCLK.W1.B#PYND03.J56754.CO.FSTD2.D0000108 : Fri Jan  4 22:18:05 2008 (EST) (LCDS)
+File: PCLK.W1.BQPYND03.J56758.CO.FSTD4.D0000104 : Fri Jan  4 22:18:07 2008 (EST) (QCS)
+----------------------------------------------------------------------
+
+Job: 46721 - P15.45 
+Image received time (WA time): 04/01/2008 20:02:09
+File: PCLK.W1.P#BL02C1.J55100.CJ.FSTD.D0000115 : Fri Jan  4 22:02:07 2008 (EST) (MSR)
+File: PCLK.W1.P#BL02C1.J55100.CO.FSTD.D0000111 : Fri Jan  4 22:02:08 2008 (EST) (META)
+File: PCLK.W1.PQBL02C1.J55127.CO.FSTD4.D0000104 : Fri Jan  4 22:02:09 2008 (EST) (QCS)
+----------------------------------------------------------------------
+
+Job: 46713 - P15.31 
+Image received time (WA time): 04/01/2008 19:54:05
+File: PCLK.W1.P#BLP2A5.J55007.CJ.FSTD.D0000116 : Fri Jan  4 21:46:04 2008 (EST) (MSR)
+File: PCLK.W1.PQBLP2A5.J55037.CO.FSTD4.D0000104 : Fri Jan  4 21:48:04 2008 (EST) (QCS)
+File: PCLK.W1.P#BLP2A5.J55007.CO.FSTD.D0000112 : Fri Jan  4 21:54:05 2008 (EST) (META)
+----------------------------------------------------------------------
+
+Job: H40601 - P15.46 
+Image received time (WA time): 04/01/2008 20:08:05
+File: PCLK.W1.P#PYCH39.J55177.CB.FSTD.D0000107 : Fri Jan  4 22:08:04 2008 (EST) (FLAT)
+File: PCLK.W1.PQPYCH39.J55192.CO.FSTD4.D0000104 : Fri Jan  4 22:08:05 2008 (EST) (QCS)
+----------------------------------------------------------------------
+
+Job: H40671 - P15.47 
+Image received time (WA time): 04/01/2008 20:32:16
+File: PCLK.W1.P#TXDA2.J55262.CO.FSTD.D0000112 : Fri Jan  4 22:32:05 2008 (EST) (META)
+File: PCLK.W1.PQTXDA2.J55271.CO.FSTD4.D0000104 : Fri Jan  4 22:32:16 2008 (EST) (QCS)
+
+
